@@ -1,0 +1,12 @@
+# Project exclude paths
+.idea
+/venv/
+/userbot/config.py
+run.sh
+/venv2/
+userbot2.session
+/userbot/modules/keksban.py
+*.pyc
+*/__pycache__
+*.swp
+*.session-journal

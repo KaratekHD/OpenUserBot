@@ -32,22 +32,18 @@ async def fastpurger(purg):
     if purg.reply_to_msg_id is None:
         await purg.edit("`Reply to a message to select where to start purging from.`", )
         return
-    start = purg.reply_to_msg_id
-    end = purg.message.id - 1
-    LOGGER.debug(start)
-    LOGGER.debug(end)
-    if args and args[0].isdigit():
-        new_del = start + int(args[0])
-        # No point deleting messages which haven't been written yet.
-        if new_del < end:
-            end = new_del
-
-    for m_id in range(end, start - 1, -1):  # Reverse iteration over message ids
+    async for msg in itermsg:
+        msgs.append(msg)
         count = count + 1
-        await purg.client.delete_messages(chat, m_id)
-    await purg.edit("Purge complete!\n\nPurged {} messages. **This auto-generated message shall be self destructed in 2 seconds.**".format(count))
+        msgs.append(purg.reply_to_msg_id)
+        if len(msgs) == 100:
+            await purg.client.delete_messages(chat, msgs)
+            msgs = []
+    if msgs:
+        await purg.client.delete_messages(chat, msgs)
+    done = await purg.client.send_message(purg.chat_id, "Purge complete!\n\nPurged {} messages. **This auto-generated message shall be self destructed in 2 seconds.**".format(count))
     await sleep(2)
-    await purg.delete()
+    await done.delete()
 
 __help__ = " - `.purge <int>`: Reply to a message to delete all/ all x messages sent after it.\n" \
         " - `.p <int>`: Same as above.\n" \
