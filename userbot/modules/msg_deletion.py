@@ -15,7 +15,7 @@ async def delete(delete):
             await msg_src.delete()
             await delete.delete()
         except:
-            await delete.edit("`Couldn't relete message.`")
+            await delete.edit("`Couldn't delete message.`")
     else:
         await delete.edit("`Message not found.`")
         
@@ -24,6 +24,7 @@ async def delete(delete):
 @register(outgoing=True, pattern="^.p")
 async def fastpurger(purg):
     """ For .purge command, purge all messages starting from the reply. """
+    # TODO: Parsing args and deleting x messages
     args = get_args(purg)
     chat = await purg.get_input_chat()
     msgs = []
@@ -45,6 +46,7 @@ async def fastpurger(purg):
     await sleep(2)
     await done.delete()
 
+# TODO: change
 __help__ = " - `.purge <int>`: Reply to a message to delete all/ all x messages sent after it.\n" \
         " - `.p <int>`: Same as above.\n" \
         " - `.del`: Answer to a message to delete it."
