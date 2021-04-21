@@ -10,3 +10,4 @@ userbot2.session
 */__pycache__
 *.swp
 *.session-journal
+.kdev4/OpenUserBot.kdev4
