@@ -21,10 +21,10 @@ async def download(update):
         return
     link = args[0]
     if not "track" in link:
-        await update.edit("Invalid link.")
+        await update.edit("`Invalid link. Please note that playlist links won't work!`")
         return
     if is_downloading:
-        await update.edit("Already downloading a song, please wait.")
+        await update.edit("`Already downloading a song, please wait.`")
         return
     else:
         is_downloading = True
@@ -59,3 +59,5 @@ async def download(update):
         except FileNotFoundError:
             await update.edit("`Spotify-downloader is not installed.`")
         is_downloading = False
+        
+__help__ = " - `.spotdl <link>`: Download a song from Spotify using spotdl."
