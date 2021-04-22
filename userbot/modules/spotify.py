@@ -33,6 +33,7 @@ async def download(update):
             LOGGER.info("Starting download of " + link + ".")
             fetch = await create_subprocess_exec(
                 "spotdl",
+                "--ignore-ffmpeg-version", # TODO: Change this - It is required in order to run on Leap 15.2 Arm
                 link,
                 "--output",
                 path,
