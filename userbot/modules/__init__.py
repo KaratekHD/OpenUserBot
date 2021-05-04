@@ -49,9 +49,11 @@ ALL_MODULES = sorted(__list_all_modules())
 LOGGER.info("Modules to load: %s", str(ALL_MODULES))
 __all__ = ALL_MODULES + ["ALL_MODULES"]
 
+pattern = ""
 
 def register(**args):
     """ Register a new event. """
+    global pattern
     pattern = args.get('pattern', None)
     disable_edited = args.get('disable_edited', False)
     ignore_unsafe = args.get('ignore_unsafe', False)
@@ -92,6 +94,8 @@ def register(**args):
                 return
             if check.via_bot_id and not insecure and check.out:
                 # Ignore outgoing messages via inline bots for security reasons
+                return
+            if pattern.startswith("^.") and not check.message.message.startswith("."):
                 return
 
             try:

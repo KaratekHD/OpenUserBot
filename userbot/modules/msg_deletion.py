@@ -20,8 +20,8 @@ async def delete(delete):
         await delete.edit("`Message not found.`")
         
     
-@register(outgoing=True, pattern="^.purge")
-@register(outgoing=True, pattern="^.p")
+@register(outgoing=True, pattern="^.purge$")
+@register(outgoing=True, pattern="^.p$")
 async def fastpurger(purg):
     """ For .purge command, purge all messages starting from the reply. """
     # TODO: Parsing args and deleting x messages
